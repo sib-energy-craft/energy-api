@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "sec-energy-api",
+  "version": "0.0.1",
+  "authors": [
+    "sibmaks"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*"
+}

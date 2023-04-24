@@ -1,0 +1,6 @@
+{
+  "attribute.name.sib_energy_craft.charge": "Charge: %d EU",
+  "attribute.name.sib_energy_craft.max_charge": "Max Charge: %d EU",
+
+  "death.attack.energy": "%s was struck by energy"
+}

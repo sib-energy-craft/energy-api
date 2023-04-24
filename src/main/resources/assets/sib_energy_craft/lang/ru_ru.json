@@ -1,0 +1,6 @@
+{
+  "attribute.name.sib_energy_craft.charge": "Заряд: %d ЕЭ",
+  "attribute.name.sib_energy_craft.max_charge": "Максимальный заряд: %d ЕЭ",
+
+  "death.attack.energy": "%s убило током"
+}
