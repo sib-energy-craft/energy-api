@@ -1,6 +1,9 @@
 {
   "attribute.name.sib_energy_craft.charge": "Charge: %d EU",
+  "attribute.name.sib_energy_craft.energy_loss": "Loss: %d EU/p",
   "attribute.name.sib_energy_craft.max_charge": "Max Charge: %d EU",
+  "attribute.name.sib_energy_craft.max_input_eu": "Max. Input: %d EU/p",
+  "attribute.name.sib_energy_craft.output_eu": "Output: %d EU/t",
 
   "death.attack.energy": "%s was struck by energy"
 }

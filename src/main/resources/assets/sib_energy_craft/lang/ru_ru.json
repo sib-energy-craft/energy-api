@@ -1,6 +1,9 @@
 {
   "attribute.name.sib_energy_craft.charge": "Заряд: %d ЕЭ",
+  "attribute.name.sib_energy_craft.energy_loss": "Потеря: %d EU/p",
   "attribute.name.sib_energy_craft.max_charge": "Максимальный заряд: %d ЕЭ",
+  "attribute.name.sib_energy_craft.max_input_eu": "Макс. вход: %d EU/p",
+  "attribute.name.sib_energy_craft.output_eu": "Выход: %d ЕЭ/т",
 
   "death.attack.energy": "%s убило током"
 }
