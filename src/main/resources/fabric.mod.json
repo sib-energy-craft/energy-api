@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "sec-energy-api",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "name": "SibEnergyCraft",
   "description": "Fun realisation of IC from zeros. Energy API is the core of mode interactions.",
   "authors": [
@@ -12,8 +12,8 @@
   "icon": "assets/sib_energy_craft/icon.png",
   "environment": "*",
   "depends": {
-    "fabricloader": ">=0.14.17",
+    "fabricloader": ">=0.14.21",
     "fabric": "*",
-    "minecraft": "1.19.4"
+    "minecraft": "1.20-rc.1"
   }
 }
