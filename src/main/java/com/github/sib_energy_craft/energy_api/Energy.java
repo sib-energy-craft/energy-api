@@ -18,6 +18,16 @@ import java.math.RoundingMode;
 @ToString
 public class Energy implements Comparable<Energy> {
     public static Energy ZERO = Energy.of(0);
+    /**
+     * One energy unit
+     * @since 0.0.5
+     */
+    public static Energy ONE = Energy.of(1);
+    /**
+     * Ten energy units
+     * @since 0.0.5
+     */
+    public static Energy TEN = Energy.of(10);
 
     @Getter
     private final BigDecimal amount;
