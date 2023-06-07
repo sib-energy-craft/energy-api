@@ -1,16 +1,17 @@
 package com.github.sib_energy_craft.energy_api.cable;
 
-import com.github.sib_energy_craft.energy_api.constants.Constants;
 import com.github.sib_energy_craft.energy_api.EnergyLevel;
+import com.github.sib_energy_craft.energy_api.EnergyOffer;
+import com.github.sib_energy_craft.energy_api.constants.Constants;
 import com.github.sib_energy_craft.energy_api.consumer.EnergyConsumer;
 import com.github.sib_energy_craft.energy_api.supplier.EnergySupplier;
-import com.github.sib_energy_craft.energy_api.EnergyOffer;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * Energy cable - block that can transfer energy from {@link EnergySupplier} to {@link EnergyConsumer}.<br/>
@@ -34,10 +35,11 @@ public interface EnergyCable extends EnergyConsumer {
      * Method should be called on every server tick to update state of wire.<br/>
      * The method has a default behavior and usually does not need to be overridden.
      *
+     * @param serverWorld server world
      * @param blockEntity wire block entity
      */
-    default void tick(@NotNull BlockEntity blockEntity) {
-        EnergyCableTicker.tick(this, blockEntity);
+    default void tick(@NotNull ServerWorld serverWorld, @NotNull BlockEntity blockEntity) {
+        EnergyCableTicker.tick(this, serverWorld, blockEntity);
     }
 
     /**
@@ -46,7 +48,7 @@ public interface EnergyCable extends EnergyConsumer {
      * @return set of offers
      */
     @NotNull
-    Set<EnergyOffer> retrieveUpcomingOffers();
+    Map<EnergySupplier, EnergyOffer> retrieveUpcomingOffers();
 
     /**
      * The method returns the energy level of wire.<br/>

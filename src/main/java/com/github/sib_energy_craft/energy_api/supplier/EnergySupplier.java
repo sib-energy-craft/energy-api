@@ -3,6 +3,7 @@ package com.github.sib_energy_craft.energy_api.supplier;
 import com.github.sib_energy_craft.energy_api.Energy;
 import com.github.sib_energy_craft.energy_api.EnergyOffer;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,10 +20,11 @@ public interface EnergySupplier {
     /**
      * Proceed energy supplier logic on server tick
      *
+     * @param serverWorld server world
      * @param blockEntity energy supplier block
      */
-    default void tick(@NotNull BlockEntity blockEntity) {
-        EnergySupplierTicker.tick(this, blockEntity);
+    default void tick(@NotNull ServerWorld serverWorld, @NotNull BlockEntity blockEntity) {
+        EnergySupplierTicker.tick(this, serverWorld, blockEntity);
     }
 
     /**

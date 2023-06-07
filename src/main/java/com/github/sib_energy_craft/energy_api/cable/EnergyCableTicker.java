@@ -2,14 +2,14 @@ package com.github.sib_energy_craft.energy_api.cable;
 
 import com.github.sib_energy_craft.energy_api.EnergyOffer;
 import com.github.sib_energy_craft.energy_api.consumer.EnergyConsumer;
-import com.github.sib_energy_craft.energy_api.supplier.EnergySupplier;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Default implementation of energy cable tick algorithm
@@ -28,19 +28,15 @@ final class EnergyCableTicker {
      * The method update cable state, proceed incoming energy offers and forward it if needed.
      *
      * @param wire wire
+     * @param serverWorld server world
      * @param blockEntity wire block entity
      */
     public static void tick(@NotNull EnergyCable wire,
+                            @NotNull ServerWorld serverWorld,
                             @NotNull BlockEntity blockEntity) {
-        var world = blockEntity.getWorld();
-        if (!(world instanceof ServerWorld serverWorld)) {
-            return;
-        }
-
         var energyOffers = wire.retrieveUpcomingOffers();
-        var mostValuableOffers = getMostValuableOffers(energyOffers);
 
-        for (var energyOffer : mostValuableOffers.values()) {
+        for (var energyOffer : energyOffers.values()) {
             var source = energyOffer.getSource();
             if(source.isRemoved()) {
                 continue;
@@ -49,7 +45,7 @@ final class EnergyCableTicker {
                 return;
             }
 
-            forwardOffer(wire, blockEntity, world, energyOffer);
+            forwardOffer(wire, blockEntity, serverWorld, energyOffer);
         }
     }
 
@@ -90,26 +86,6 @@ final class EnergyCableTicker {
                 consumer.receiveOffer(forked);
             }
         }
-    }
-
-    @NotNull
-    private static Map<EnergySupplier, EnergyOffer> getMostValuableOffers(@NotNull Set<EnergyOffer> energyOffers) {
-        Map<EnergySupplier, EnergyOffer> mostValuableOffers = new HashMap<>();
-        for (var energyOffer : energyOffers) {
-            var source = energyOffer.getSource();
-            if(source.isRemoved()) {
-                continue;
-            }
-            if(!mostValuableOffers.containsKey(source)) {
-                mostValuableOffers.put(source, energyOffer);
-            } else {
-                var existedOffer = mostValuableOffers.get(source);
-                if(existedOffer.getEnergyAmount().compareTo(energyOffer.getEnergyAmount()) < 0) {
-                    mostValuableOffers.put(source, energyOffer);
-                }
-            }
-        }
-        return mostValuableOffers;
     }
 
 }

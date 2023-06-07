@@ -86,6 +86,9 @@ public interface ChargeableItem {
      * @return not used energy
      */
     default int charge(@NotNull ItemStack itemStack, int energy) {
+        if(itemStack.getCount() != 1) {
+            return energy;
+        }
         int charge = getCharge(itemStack);
         int used = Math.min(getMaxCharge() - charge, energy);
         setCharge(itemStack, charge + used);
@@ -118,6 +121,9 @@ public interface ChargeableItem {
      * @return not used energy
      */
     default boolean discharge(@NotNull ItemStack itemStack, int energy) {
+        if(itemStack.getCount() != 1) {
+            return false;
+        }
         int charge = getCharge(itemStack);
         if(charge < energy) {
             return false;
