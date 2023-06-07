@@ -20,19 +20,17 @@ final class EnergySupplierTicker {
      * Default implementation of energy supplying
      *
      * @param supplier energy supplier
+     * @param serverWorld server world
      * @param blockEntity energy supplier block
      */
     public static void tick(@NotNull EnergySupplier supplier,
+                            @NotNull ServerWorld serverWorld,
                             @NotNull BlockEntity blockEntity) {
-        var world = blockEntity.getWorld();
-        if(!(world instanceof ServerWorld)) {
-            return;
-        }
         var pos = blockEntity.getPos();
         var directions = supplier.getSupplyingDirections();
         for (var direction : directions) {
             var neighborPos = pos.offset(direction);
-            var neighbor = world.getBlockEntity(neighborPos);
+            var neighbor = serverWorld.getBlockEntity(neighborPos);
             if (!(neighbor instanceof EnergyConsumer consumer)) {
                 continue;
             }
