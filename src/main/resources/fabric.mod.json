@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "sec-energy-api",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "name": "SibEnergyCraft",
   "description": "Fun realisation of IC from zeros. Energy API is the core of mode interactions.",
   "authors": [
