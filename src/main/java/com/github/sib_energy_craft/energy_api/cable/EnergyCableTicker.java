@@ -41,6 +41,10 @@ final class EnergyCableTicker {
         var mostValuableOffers = getMostValuableOffers(energyOffers);
 
         for (var energyOffer : mostValuableOffers.values()) {
+            var source = energyOffer.getSource();
+            if(source.isRemoved()) {
+                continue;
+            }
             if (assertOffer(wire, blockEntity, serverWorld, energyOffer)) {
                 return;
             }
@@ -78,11 +82,12 @@ final class EnergyCableTicker {
         for (var direction : SUPPLYING_DIRECTIONS) {
             var neighborPos = pos.offset(direction);
             var neighbor = world.getBlockEntity(neighborPos);
-            if (neighbor instanceof EnergyConsumer consumer) {
-                var opposite = direction.getOpposite();
-                if (consumer.isConsumeFrom(opposite)) {
-                    consumer.receiveOffer(forked);
-                }
+            if (!(neighbor instanceof EnergyConsumer consumer)) {
+                continue;
+            }
+            var opposite = direction.getOpposite();
+            if (consumer.isConsumeFrom(opposite)) {
+                consumer.receiveOffer(forked);
             }
         }
     }
@@ -92,6 +97,9 @@ final class EnergyCableTicker {
         Map<EnergySupplier, EnergyOffer> mostValuableOffers = new HashMap<>();
         for (var energyOffer : energyOffers) {
             var source = energyOffer.getSource();
+            if(source.isRemoved()) {
+                continue;
+            }
             if(!mostValuableOffers.containsKey(source)) {
                 mostValuableOffers.put(source, energyOffer);
             } else {

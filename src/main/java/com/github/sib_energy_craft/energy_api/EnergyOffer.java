@@ -42,7 +42,7 @@ public class EnergyOffer implements Comparable<EnergyOffer> {
      * @return true - offer accepted, false - otherwise
      */
     public boolean acceptOffer() {
-        return source.supplyEnergy(baseEnergyAmount);
+        return !source.isRemoved() && source.supplyEnergy(baseEnergyAmount);
     }
 
     /**
@@ -54,6 +54,9 @@ public class EnergyOffer implements Comparable<EnergyOffer> {
      */
     @Nullable
     public EnergyOffer fork(@NotNull BigDecimal resistance) {
+        if(source.isRemoved()) {
+            return null;
+        }
         var energyAmount = this.energyAmount.subtract(resistance);
         if(energyAmount.compareTo(Energy.ZERO) <= 0) {
             return null;
