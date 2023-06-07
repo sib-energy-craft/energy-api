@@ -42,6 +42,13 @@ public interface EnergySupplier {
     EnergyOffer createOffer();
 
     /**
+     * Is energy supplier removed from world or not
+     *
+     * @return true - supplier removed, false - otherwise
+     */
+    boolean isRemoved();
+
+    /**
      * Supply passed energy amount
      *
      * @param energyAmount requested amount
