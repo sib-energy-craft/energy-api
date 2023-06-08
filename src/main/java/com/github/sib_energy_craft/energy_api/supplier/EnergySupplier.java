@@ -44,11 +44,12 @@ public interface EnergySupplier {
     EnergyOffer createOffer();
 
     /**
-     * Is energy supplier removed from world or not
+     * Method to check is energy supplier dead or malfunction.<br/>
+     * In this case energy offer not emitted
      *
      * @return true - supplier removed, false - otherwise
      */
-    boolean isRemoved();
+    boolean isSupplierDead();
 
     /**
      * Supply passed energy amount

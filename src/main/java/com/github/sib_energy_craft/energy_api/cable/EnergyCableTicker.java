@@ -38,7 +38,7 @@ final class EnergyCableTicker {
 
         for (var energyOffer : energyOffers.values()) {
             var source = energyOffer.getSource();
-            if(source.isRemoved()) {
+            if(source.isSupplierDead()) {
                 continue;
             }
             if (assertOffer(wire, blockEntity, serverWorld, energyOffer)) {
