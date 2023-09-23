@@ -1,5 +1,6 @@
 package com.github.sib_energy_craft.energy_api.cable;
 
+import com.github.sib_energy_craft.energy_api.Energy;
 import com.github.sib_energy_craft.energy_api.EnergyLevel;
 import com.github.sib_energy_craft.energy_api.EnergyOffer;
 import com.github.sib_energy_craft.energy_api.constants.Constants;
@@ -10,7 +11,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -29,7 +29,7 @@ public interface EnergyCable extends EnergyConsumer {
      * @return resistance
      */
     @NotNull
-    BigDecimal getResistance();
+    Energy getResistance();
 
     /**
      * Method should be called on every server tick to update state of wire.<br/>

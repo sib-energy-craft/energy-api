@@ -9,21 +9,38 @@ package com.github.sib_energy_craft.energy_api;
  * @author sibmaks
  */
 public enum EnergyLevel {
+    /**
+     * 1st energy level
+     */
     L1(0, 32),
+    /**
+     * 2nd energy level
+     */
     L2(32, 128),
+    /**
+     * 3rd energy level
+     */
     L3(128, 512),
+    /**
+     * 4th energy level
+     */
     L4(512, 2048),
+    /**
+     * 5th energy level
+     */
     L5(2048, 8192);
 
-    public final int from;
-    public final Energy fromBig;
-    public final int to;
-    public final Energy toBig;
+    /**
+     * Left bound of energy level as energy
+     */
+    public final Energy from;
+    /**
+     * Right bound of energy level as energy
+     */
+    public final Energy to;
 
     EnergyLevel(int from, int to) {
-        this.from = from;
-        this.to = to;
-        this.fromBig = Energy.of(from);
-        this.toBig = Energy.of(to);
+        this.from = new Energy(from);
+        this.to = new Energy(to);
     }
 }

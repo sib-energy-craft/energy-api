@@ -8,7 +8,6 @@ import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -27,6 +26,12 @@ public class EnergyOffer implements Comparable<EnergyOffer> {
     private final Energy energyAmount;
     private final Energy baseEnergyAmount;
 
+    /**
+     * Energy offer constructor
+     *
+     * @param source energy offer source
+     * @param energyAmount amount of offered energy
+     */
     public EnergyOffer(@NotNull EnergySupplier source,
                        @NotNull Energy energyAmount) {
         this.source = source;
@@ -49,11 +54,11 @@ public class EnergyOffer implements Comparable<EnergyOffer> {
      * Fork offer for a new one and reduce offered amount of energy.<br/>
      * If energy not enough to create new offer then null will be returned
      *
-     * @param resistance amount of losing energy
+     * @param resistance losing energy
      * @return forked offer
      */
     @Nullable
-    public EnergyOffer fork(@NotNull BigDecimal resistance) {
+    public EnergyOffer fork(@NotNull Energy resistance) {
         if(source.isSupplierDead()) {
             return null;
         }

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Interface that add ability to charge items.<br/>
  * Chargeable item has two fields:<br/>
- * - charge - amount of having energy</br>
+ * - charge - amount of having energy<br/>
  * - maxCharge - max amount of item energy
  *
  * @since 0.0.1
@@ -46,7 +46,7 @@ public interface ChargeableItem {
 
     /**
      * Get item charge.<br/>
-     * Should be between 0 and max charge.
+     * Should be between 0 and {@link #getMaxCharge()}.
      *
      * @param itemStack item stack
      * @return item charge

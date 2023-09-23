@@ -13,11 +13,26 @@ import java.math.RoundingMode;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Constants {
+    /**
+     * Accuracy of energy transferring
+     */
     public static final int ENERGY_PRECISION = 10;
 
+    /**
+     * '0' with mod accuracy
+     */
     public static final BigDecimal ACCURATE_ZERO = accurate(BigDecimal.ZERO);
+    /**
+     * '1' with mod accuracy
+     */
     public static final BigDecimal ACCURATE_ONE = accurate(BigDecimal.ONE);
+    /**
+     * '10' with mod accuracy
+     */
     public static final BigDecimal ACCURATE_TEN = accurate(BigDecimal.TEN);
+    /**
+     * '100' with mod accuracy
+     */
     public static final BigDecimal ACCURATE_HUNDRED = ACCURATE_TEN.multiply(ACCURATE_TEN);
 
     /**

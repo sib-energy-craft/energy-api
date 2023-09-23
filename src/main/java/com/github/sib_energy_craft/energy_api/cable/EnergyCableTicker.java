@@ -54,7 +54,7 @@ final class EnergyCableTicker {
                                        @NotNull ServerWorld serverWorld,
                                        @NotNull EnergyOffer energyOffer) {
         var wireEnergyLevel = wire.getEnergyLevel();
-        if (wireEnergyLevel.toBig.compareTo(energyOffer.getEnergyAmount()) < 0) {
+        if (wireEnergyLevel.to.compareTo(energyOffer.getEnergyAmount()) < 0) {
             if (energyOffer.acceptOffer()) {
                 var pos = blockEntity.getPos();
                 serverWorld.breakBlock(pos, false);

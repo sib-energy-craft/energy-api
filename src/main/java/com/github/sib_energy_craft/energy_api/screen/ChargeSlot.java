@@ -16,6 +16,15 @@ import org.jetbrains.annotations.NotNull;
 public class ChargeSlot extends Slot {
     private final boolean charging;
 
+    /**
+     * Charge slot constructor
+     *
+     * @param inventory slot inventory
+     * @param index index of slot in inventory
+     * @param x screen x position
+     * @param y screen y position
+     * @param charging true - slot for item charging, false - discharging
+     */
     public ChargeSlot(@NotNull Inventory inventory,
                       int index,
                       int x,
