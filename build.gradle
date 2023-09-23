@@ -2,6 +2,7 @@ plugins {
     id 'fabric-loom' version '1.3-SNAPSHOT'
     id 'maven-publish'
     id 'java'
+    id 'signing'
 }
 
 version = project.mod_version
@@ -69,6 +70,7 @@ java {
         toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
     }
     archivesBaseName = project.archives_base_name
+    withJavadocJar()
     withSourcesJar()
 }
 
@@ -92,9 +94,47 @@ jar {
     }
 }
 
-// configure the maven publication
 publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from(components.java)
+            pom {
+                packaging = "jar"
+                url.set("https://github.com/sib-energy-craft/energy-apit")
+
+                licenses {
+                    license {
+                        name.set("The MIT License (MIT)")
+                        url.set("https://www.mit.edu/~amini/LICENSE.md")
+                    }
+                }
+
+                scm {
+                    connection.set("scm:https://github.com/sib-energy-craft/energy-api.git")
+                    developerConnection.set("scm:git@github.com:sib-energy-craft/energy-api.git")
+                    url.set("https://github.com/sib-energy-craft/energy-api")
+                }
+
+                developers {
+                    developer {
+                        id.set("sibmaks")
+                        name.set("Maksim Drobyshev")
+                        email.set("sibmaks@vk.com")
+                    }
+                }
+            }
+        }
+    }
     repositories {
+        maven {
+            def releasesUrl = uri("https://sibmaks.ru/repository/maven-releases/")
+            def snapshotsUrl = uri("https://sibmaks.ru/repository/maven-snapshots/")
+            url = version.toString().endsWith("SNAPSHOT") ? snapshotsUrl : releasesUrl
+            credentials {
+                username = project.findProperty("nexus_username") ?: System.getenv("NEXUS_USERNAME")
+                password = project.findProperty("nexus_password") ?: System.getenv("NEXUS_PASSWORD")
+            }
+        }
         maven {
             name = "GitHubPackages"
             url = "https://maven.pkg.github.com/sib-energy-craft/energy-api"
@@ -104,9 +144,8 @@ publishing {
             }
         }
     }
-    publications {
-        gpr(MavenPublication) {
-            from(components.java)
-        }
-    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }
