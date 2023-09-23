@@ -100,26 +100,26 @@ publishing {
             from(components.java)
             pom {
                 packaging = "jar"
-                url.set("https://github.com/sib-energy-craft/energy-apit")
+                url = "https://github.com/sib-energy-craft/energy-apit"
 
                 licenses {
                     license {
-                        name.set("The MIT License (MIT)")
-                        url.set("https://www.mit.edu/~amini/LICENSE.md")
+                        name = "The MIT License (MIT)"
+                        url = "https://www.mit.edu/~amini/LICENSE.md"
                     }
                 }
 
                 scm {
-                    connection.set("scm:https://github.com/sib-energy-craft/energy-api.git")
-                    developerConnection.set("scm:git@github.com:sib-energy-craft/energy-api.git")
-                    url.set("https://github.com/sib-energy-craft/energy-api")
+                    connection = "scm:https://github.com/sib-energy-craft/energy-api.git"
+                    developerConnection = 'scm:git:ssh://github.com/sib-energy-craft'
+                    url = "https://github.com/sib-energy-craft/energy-api"
                 }
 
                 developers {
                     developer {
-                        id.set("sibmaks")
-                        name.set("Maksim Drobyshev")
-                        email.set("sibmaks@vk.com")
+                        id = "sibmaks"
+                        name = "Maksim Drobyshev"
+                        email = "sibmaks@vk.com"
                     }
                 }
             }
@@ -146,6 +146,6 @@ publishing {
     }
 }
 
-signing {
-    sign publishing.publications.mavenJava
-}
+//signing {
+//    sign publishing.publications.mavenJava
+//}
