@@ -43,7 +43,7 @@ public class ChargeSlot extends Slot {
         if(charging) {
             return chargeableItem.hasFreeSpace(stack);
         } else {
-            return chargeableItem.getCharge(stack) > 0;
+            return chargeableItem.hasEnergy(stack);
         }
     }
 
