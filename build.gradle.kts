@@ -97,7 +97,7 @@ publishing {
             from(components["java"])
             pom {
                 packaging = "jar"
-                url = "https://github.com/sib-energy-craft/energy-apit"
+                url = "https://github.com/sib-energy-craft/energy-api"
 
                 licenses {
                     license {
