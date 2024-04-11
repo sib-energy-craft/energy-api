@@ -97,8 +97,8 @@ public class Energy implements Comparable<Energy> {
      * Returns a {@code Energy} whose value is {@code (this / divisor)}.
      *
      * @param divisor value to be multiplied to this {@code Energy}.
-     * @throws ArithmeticException - if divisor==0.
      * @return {@code this / divisor}
+     * @throws ArithmeticException - if divisor==0.
      * @since 0.1.2
      */
     @NotNull
@@ -108,12 +108,12 @@ public class Energy implements Comparable<Energy> {
     }
 
     /**
-     * Returns a {@code Energy} whose value is <tt>(this<sup>n</sup>)</tt>.<br/>
+     * Returns a {@code Energy} whose value is <code>(this<sup>n</sup>)</code>.<br/>
      * The parameter n must be in the range 0 through 999999999, inclusive.
      *
      * @param n power to raise this {@code Energy} to.
+     * @return <code>this<sup>n</sup></code>
      * @throws ArithmeticException - if n is out of range.
-     * @return <tt>this<sup>n</sup></tt>
      * @since 0.1.2
      */
     @NotNull
