@@ -81,6 +81,48 @@ public class Energy implements Comparable<Energy> {
     }
 
     /**
+     * Returns a {@code Energy} whose value is {@code (this * delta)}.
+     *
+     * @param delta value to be multiplied to this {@code Energy}.
+     * @return {@code this * delta}
+     * @since 0.1.2
+     */
+    @NotNull
+    public Energy multiply(@NotNull Energy delta) {
+        var result = amount.multiply(delta.amount);
+        return new Energy(result);
+    }
+
+    /**
+     * Returns a {@code Energy} whose value is {@code (this / divisor)}.
+     *
+     * @param divisor value to be multiplied to this {@code Energy}.
+     * @throws ArithmeticException - if divisor==0.
+     * @return {@code this / divisor}
+     * @since 0.1.2
+     */
+    @NotNull
+    public Energy divide(@NotNull Energy divisor) {
+        var result = amount.divide(divisor.amount, RoundingMode.HALF_DOWN);
+        return new Energy(result);
+    }
+
+    /**
+     * Returns a {@code Energy} whose value is <tt>(this<sup>n</sup>)</tt>.<br/>
+     * The parameter n must be in the range 0 through 999999999, inclusive.
+     *
+     * @param n power to raise this {@code Energy} to.
+     * @throws ArithmeticException - if n is out of range.
+     * @return <tt>this<sup>n</sup></tt>
+     * @since 0.1.2
+     */
+    @NotNull
+    public Energy pow(int n) {
+        var result = amount.pow(n);
+        return new Energy(result);
+    }
+
+    /**
      * Returns a {@code Energy} whose value is {@code (max(0, this - delta))}.
      *
      * @param delta value to be added to this {@code Energy}.
