@@ -1,6 +1,7 @@
 package com.github.sib_energy_craft.energy_api;
 
 import com.github.sib_energy_craft.energy_api.constants.Constants;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import net.minecraft.nbt.NbtCompound;
@@ -14,6 +15,8 @@ import java.util.Objects;
  * @author sibmaks
  * @since 0.0.1
  */
+@Getter
+@EqualsAndHashCode
 @ToString
 public class Energy implements Comparable<Energy> {
     /**
@@ -33,7 +36,6 @@ public class Energy implements Comparable<Energy> {
      */
     public static final Energy TEN = new Energy(10);
 
-    @Getter
     private final BigDecimal amount;
 
     /**
