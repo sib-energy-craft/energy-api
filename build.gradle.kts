@@ -5,7 +5,7 @@ plugins {
     id("fabric-loom") version "1.6-SNAPSHOT"
     id("maven-publish")
     id("java")
-    id("signing")
+    id("jacoco")
 }
 
 version = project.property("mod_version") as String
@@ -37,6 +37,12 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${project.property("junit_version")}")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:${project.property("junit_version")}")
+    testImplementation("org.mockito:mockito-core:${project.property("mockito_version")}")
+
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${project.property("junit_version")}")
 }
 
 tasks.processResources {
@@ -143,6 +149,11 @@ publishing {
     }
 }
 
-//signing {
-//    sign publishing.publications.mavenJava
-//}
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+}

@@ -68,6 +68,21 @@ public class Energy implements Comparable<Energy> {
     }
 
     /**
+     * Translate passed {@link String} amount into energy with scale to mod accuracy
+     *
+     * @param amount energy amount
+     */
+    public Energy(String amount) {
+        Objects.requireNonNull(amount, "Amount can't be null");
+        var bigDecimal = new BigDecimal(amount)
+                .setScale(Constants.ENERGY_PRECISION, RoundingMode.HALF_DOWN);
+        if (bigDecimal.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Energy can't be negative!");
+        }
+        this.amount = bigDecimal.max(Constants.ACCURATE_ZERO);
+    }
+
+    /**
      * Returns a {@code Energy} whose value is {@code (this + delta)}.
      *
      * @param delta value to be added to this {@code Energy}.
@@ -204,5 +219,19 @@ public class Energy implements Comparable<Energy> {
         var chargeSerialized = nbt.getString(key);
         var charge = new BigDecimal(chargeSerialized);
         return new Energy(charge);
+    }
+
+    /**
+     * Represent energy as plain string, e.g.:<br/>
+     * - 0<br/>
+     * - 0.1<br/>
+     * - 12.321<br/>
+     *
+     * @return energy as plain string
+     */
+    public String toPlainString() {
+        return amount
+                .stripTrailingZeros()
+                .toPlainString();
     }
 }
