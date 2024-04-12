@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import net.minecraft.nbt.NbtCompound;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -217,6 +218,9 @@ public class Energy implements Comparable<Energy> {
      */
     public static Energy readNbt(String key, NbtCompound nbt) {
         var chargeSerialized = nbt.getString(key);
+        if(StringUtils.isBlank(chargeSerialized)) {
+            return Energy.ZERO;
+        }
         var charge = new BigDecimal(chargeSerialized);
         return new Energy(charge);
     }
