@@ -167,9 +167,13 @@ public interface ChargeableItem {
      */
     default void appendTooltip(@NotNull ItemStack itemStack,
                                @NotNull List<Text> tooltip) {
-        tooltip.add(Text.translatable("attribute.name.sib_energy_craft.charge", getCharge(itemStack))
+        var itemCharge = getCharge(itemStack)
+                .toPlainString();
+        var maxCharge = getMaxCharge()
+                .toPlainString();
+        tooltip.add(Text.translatable("attribute.name.sib_energy_craft.charge", itemCharge)
                 .setStyle(Style.EMPTY.withColor(Color.GRAY.getRGB())));
-        tooltip.add(Text.translatable("attribute.name.sib_energy_craft.max_charge", getMaxCharge())
+        tooltip.add(Text.translatable("attribute.name.sib_energy_craft.max_charge", maxCharge)
                 .setStyle(Style.EMPTY.withColor(Color.GRAY.getRGB())));
     }
 }
