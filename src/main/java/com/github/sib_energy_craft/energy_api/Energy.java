@@ -1,11 +1,10 @@
 package com.github.sib_energy_craft.energy_api;
 
 import com.github.sib_energy_craft.energy_api.constants.Constants;
+import com.github.sib_energy_craft.energy_api.exception.NegativeEnergyException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import net.minecraft.nbt.NbtCompound;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -13,6 +12,8 @@ import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
+ * The class that represents energy, the main source of power to supply mod mechanisms.
+ *
  * @author sibmaks
  * @since 0.0.1
  */
@@ -46,7 +47,7 @@ public class Energy implements Comparable<Energy> {
      */
     public Energy(int amount) {
         if (amount < 0) {
-            throw new IllegalArgumentException("Energy can't be negative!");
+            throw new NegativeEnergyException();
         }
         this.amount = BigDecimal.valueOf(amount)
                 .setScale(Constants.ENERGY_PRECISION, RoundingMode.HALF_DOWN)
@@ -61,7 +62,7 @@ public class Energy implements Comparable<Energy> {
     public Energy(BigDecimal amount) {
         Objects.requireNonNull(amount, "Amount can't be null");
         if (amount.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Energy can't be negative!");
+            throw new NegativeEnergyException();
         }
         this.amount = amount
                 .setScale(Constants.ENERGY_PRECISION, RoundingMode.HALF_DOWN)
@@ -78,7 +79,7 @@ public class Energy implements Comparable<Energy> {
         var bigDecimal = new BigDecimal(amount)
                 .setScale(Constants.ENERGY_PRECISION, RoundingMode.HALF_DOWN);
         if (bigDecimal.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Energy can't be negative!");
+            throw new NegativeEnergyException();
         }
         this.amount = bigDecimal.max(Constants.ACCURATE_ZERO);
     }
@@ -172,8 +173,8 @@ public class Energy implements Comparable<Energy> {
     /**
      * Returns the minimum of this {@code Energy} and {@code value}.
      *
-     * @param value value with which the minimum is to be computed.
-     * @return the {@code Energy} whose value is the lesser of this
+     * @param value the value with which the minimum is to be computed.
+     * @return the {@code Energy} whose value is the least of this
      * {@code Energy} and {@code value}.  If they are equal,
      * as defined by the {@link #compareTo(Energy) compareTo}
      * method, {@code this} is returned.
@@ -187,7 +188,7 @@ public class Energy implements Comparable<Energy> {
     /**
      * Returns the maximum of this {@code Energy} and {@code value}.
      *
-     * @param value value with which the maximum is to be computed.
+     * @param value the value with which the maximum is to be computed.
      * @return the {@code Energy} whose value is the greatest of this
      * {@code Energy} and {@code value}.  If they are equal,
      * as defined by the {@link #compareTo(Energy) compareTo}
@@ -197,32 +198,6 @@ public class Energy implements Comparable<Energy> {
     @NotNull
     public Energy max(@NotNull Energy value) {
         return this.compareTo(value) >= 0 ? this : value;
-    }
-
-    /**
-     * Write energy into NBT with passed key
-     *
-     * @param key nbt energy key
-     * @param nbt nbt to write
-     */
-    public void writeNbt(String key, NbtCompound nbt) {
-        nbt.putString(key, amount.toPlainString());
-    }
-
-    /**
-     * Read Energy from {@link NbtCompound} by passed key
-     *
-     * @param key energy key
-     * @param nbt source nbt
-     * @return energy instance
-     */
-    public static Energy readNbt(String key, NbtCompound nbt) {
-        var chargeSerialized = nbt.getString(key);
-        if(StringUtils.isBlank(chargeSerialized)) {
-            return Energy.ZERO;
-        }
-        var charge = new BigDecimal(chargeSerialized);
-        return new Energy(charge);
     }
 
     /**

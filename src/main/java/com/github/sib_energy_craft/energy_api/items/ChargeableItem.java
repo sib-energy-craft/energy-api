@@ -1,9 +1,8 @@
 package com.github.sib_energy_craft.energy_api.items;
 
 import com.github.sib_energy_craft.energy_api.Energy;
-import com.github.sib_energy_craft.energy_api.utils.Identifiers;
+import com.github.sib_energy_craft.energy_api.component.ComponentTypes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +11,7 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * Interface that add ability to charge items.<br/>
+ * Interface that adds the ability to charge items.<br/>
  * Chargeable item has two fields:<br/>
  * - charge - amount of having energy<br/>
  * - maxCharge - max amount of item energy
@@ -21,26 +20,24 @@ import java.util.List;
  * @since 0.0.1
  */
 public interface ChargeableItem {
-    /**
-     * NBT Charge attribute identifier
-     */
-    String CHARGE = Identifiers.asString("Charge");
 
     /**
      * Get item max charge
      *
      * @return max charge
      */
+    @NotNull
     Energy getMaxCharge();
 
     /**
      * Get energy free space.<br/>
-     * Should be between 0 and max charge.<br/>
+     * Should be between zero and max charge.<br/>
      * Calculates as max charge - charge.
      *
      * @param itemStack item stack
      * @return free space
      */
+    @NotNull
     default Energy getFreeSpace(@NotNull ItemStack itemStack) {
         var maxCharge = getMaxCharge();
         var itemCharge = getCharge(itemStack);
@@ -54,12 +51,9 @@ public interface ChargeableItem {
      * @param itemStack item stack
      * @return item charge
      */
+    @NotNull
     default Energy getCharge(@NotNull ItemStack itemStack) {
-        var nbt = itemStack.getNbt();
-        if (nbt == null) {
-            return Energy.ZERO;
-        }
-        return Energy.readNbt(CHARGE, nbt);
+        return itemStack.getOrDefault(ComponentTypes.CHARGE, Energy.ZERO);
     }
 
     /**
@@ -86,7 +80,7 @@ public interface ChargeableItem {
     }
 
     /**
-     * The method add charge to item.<br/>
+     * The method adds charge to item.<br/>
      * Item use only required amount of energy.<br/>
      * Not used energy returned.
      *
@@ -94,6 +88,7 @@ public interface ChargeableItem {
      * @param energy    energy for charge
      * @return not used energy
      */
+    @NotNull
     default Energy charge(@NotNull ItemStack itemStack, Energy energy) {
         if (itemStack.getCount() != 1) {
             return energy;
@@ -114,15 +109,12 @@ public interface ChargeableItem {
      * @param charge    amount of energy
      */
     default void setCharge(@NotNull ItemStack itemStack, Energy charge) {
-        if (itemStack.getItem() instanceof ChargeableItem chargeableItem) {
-            var nbt = itemStack.getOrCreateNbt();
-            var maxCharge = chargeableItem.getMaxCharge();
-            maxCharge
-                    .min(charge)
-                    .writeNbt(CHARGE, nbt);
-        } else {
+        if (!(itemStack.getItem() instanceof ChargeableItem chargeableItem)) {
             throw new IllegalArgumentException("Item must be Chargeable: %s".formatted(itemStack.getItem()));
         }
+        var maxCharge = chargeableItem.getMaxCharge();
+        charge = maxCharge.min(charge);
+        itemStack.set(ComponentTypes.CHARGE, charge);
     }
 
     /**
@@ -153,9 +145,8 @@ public interface ChargeableItem {
      * @param itemStack crafted item stack
      */
     default void onCraft(@NotNull ItemStack itemStack) {
-        var nbt = itemStack.getOrCreateNbt();
-        if (!nbt.contains(CHARGE, NbtElement.INT_TYPE)) {
-            Energy.ZERO.writeNbt(CHARGE, nbt);
+        if (!itemStack.contains(ComponentTypes.CHARGE)) {
+            itemStack.set(ComponentTypes.CHARGE, Energy.ZERO);
         }
     }
 

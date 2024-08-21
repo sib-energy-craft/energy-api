@@ -20,7 +20,8 @@ public final class EnergyWriter {
      */
     public static void write(Energy value, PacketByteBuf buffer) {
         var bigDecimal = value.getAmount();
-        var parts = bigDecimal.unscaledValue().toByteArray();
+        var parts = bigDecimal.unscaledValue()
+                .toByteArray();
         buffer.writeByteArray(parts);
         buffer.writeInt(bigDecimal.scale());
     }

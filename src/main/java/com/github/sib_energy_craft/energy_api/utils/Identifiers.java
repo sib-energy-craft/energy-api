@@ -6,6 +6,8 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * Mod energy identifiers
+ *
  * @since 0.0.1
  * @author sibmaks
  */
@@ -24,7 +26,7 @@ public final class Identifiers {
      */
     @NotNull
     public static Identifier of(@NotNull String path) {
-        return new Identifier(MOD_NAMESPACE, path);
+        return Identifier.of(MOD_NAMESPACE, path);
     }
 
     /**

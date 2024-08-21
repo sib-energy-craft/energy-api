@@ -8,8 +8,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * @since 0.0.1
+ * Mod related constants
+ *
  * @author sibmaks
+ * @since 0.0.1
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Constants {

@@ -8,7 +8,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 
 /**
- * Damage types, can be caused be mod
+ * Damage types can be caused be mod
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DamageTypes {

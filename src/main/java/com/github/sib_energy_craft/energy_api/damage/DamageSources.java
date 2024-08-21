@@ -8,14 +8,16 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * @since 0.0.4
+ * Define mod related damage sources
+ *
  * @author sibmaks
+ * @since 0.0.4
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DamageSources {
 
     /**
-     * Get damage source for passed world
+     * Get a damage source for a passed world
      *
      * @param world game world
      * @return damage source
