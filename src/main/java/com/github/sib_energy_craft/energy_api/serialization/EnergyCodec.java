@@ -5,6 +5,8 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -16,7 +18,10 @@ import java.nio.ByteBuffer;
  * @author sibmaks
  * @since 0.1.2
  */
-public class EnergyCodec implements Codec<Energy> {
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public final class EnergyCodec implements Codec<Energy> {
+    public static final EnergyCodec CODEC = new EnergyCodec();
+
     @Override
     public <T> DataResult<Pair<Energy, T>> decode(DynamicOps<T> ops, T input) {
         return ops.getNumberValue(input)

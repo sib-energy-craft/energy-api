@@ -24,7 +24,7 @@ public final class ComponentTypes {
             Registries.DATA_COMPONENT_TYPE,
             Identifiers.of("charge"),
             ComponentType.<Energy>builder()
-                    .codec(new EnergyCodec())
+                    .codec(EnergyCodec.CODEC)
                     .build()
     );
 }
