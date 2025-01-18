@@ -2,53 +2,46 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 plugins {
-    id("fabric-loom") version "1.7-SNAPSHOT"
+    alias(libs.plugins.fabric.loom)
     id("maven-publish")
     id("java")
     id("jacoco")
 }
 
-val modVersion = project.property("mod_version") as String
-val minecraftVersion = project.property("minecraft_version") as String
-
-version = "$modVersion-$minecraftVersion"
-group = project.property("maven_group") as String
-
-val targetJavaVersion = (project.property("jdk_version") as String).toInt()
-val javaVersion = JavaVersion.toVersion(targetJavaVersion)
-
-allprojects {
-    apply(plugin = "fabric-loom")
-    apply(plugin = "java")
-
-    java {
-        sourceCompatibility = javaVersion
-        targetCompatibility = javaVersion
-    }
-
-    repositories {
-        mavenCentral()
-    }
-
+repositories {
+    mavenCentral()
 }
 
 dependencies {
-    compileOnly("org.projectlombok:lombok:${project.property("lombok_version")}")
-    annotationProcessor("org.projectlombok:lombok:${project.property("lombok_version")}")
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
 
-    // To change the versions, see the gradle.properties file
-    minecraft("com.mojang:minecraft:${minecraftVersion}")
-    mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
-    modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
+    minecraft(libs.minecraft)
+    mappings(variantOf(libs.fabric.yarn) { classifier("v2") })
+    modImplementation(libs.fabric.loader)
 
-    // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+    modImplementation(libs.fabric.api)
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${project.property("junit_version")}")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:${project.property("junit_version")}")
-    testImplementation("org.mockito:mockito-core:${project.property("mockito_version")}")
+    testImplementation(libs.bundles.testing)
 
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${project.property("junit_version")}")
+    testRuntimeOnly(libs.junit.jupiter.engine)
+}
+val minecraftVersion = libs.versions.minecraft.get()
+
+version = System.getenv("VERSION")  ?: "unspecified"
+group = project.property("maven_group") as String
+
+val targetJavaVersion = (libs.versions.java.get()).toInt()
+val javaVersion = JavaVersion.toVersion(targetJavaVersion)
+
+java {
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+    withJavadocJar()
+    withSourcesJar()
 }
 
 tasks.processResources {
@@ -57,6 +50,10 @@ tasks.processResources {
 
     val properties = project.properties.mapKeys { it.key }
         .mapValues { it.value.toString() }
+        .toMutableMap()
+
+    properties["minecraft_version"] = minecraftVersion
+    properties["loader_version"] = libs.versions.loader.get()
 
     filesMatching("fabric.mod.json") {
         expand(properties)
@@ -64,22 +61,8 @@ tasks.processResources {
 }
 
 tasks.withType<JavaCompile>().configureEach {
-    // ensure that the encoding is set to UTF-8, no matter what the system default is
-    // this fixes some edge cases with special characters not displaying correctly
-    // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-    // If Javadoc is generated, this must be specified in that task too.
     options.encoding = "UTF-8"
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        options.release = targetJavaVersion
-    }
-}
-
-java {
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
-    withJavadocJar()
-    withSourcesJar()
+    options.release = targetJavaVersion
 }
 
 tasks.jar {

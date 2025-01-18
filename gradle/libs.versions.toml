@@ -1,0 +1,32 @@
+[versions]
+java = "21"
+
+minecraft = "1.21.4"
+yarn-mappings = "1.21.4+build.8"
+loader = "0.16.10"
+
+fabricmc = "0.114.3+1.21.4"
+fabricmc-loom = "1.9-SNAPSHOT"
+
+lombok = "1.18.36"
+junit-jupiter = "5.11.4"
+mockito = "5.15.2"
+
+[libraries]
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+fabric-yarn = { module = "net.fabricmc:yarn", version.ref = "yarn-mappings" }
+fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "loader" }
+fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabricmc" }
+
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit-jupiter" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
+mockito = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+
+[plugins]
+fabric-loom = { id = "fabric-loom", version.ref = "fabricmc-loom" }
+
+[bundles]
+testing = ["junit-jupiter-api", "junit-jupiter-params", "mockito"]

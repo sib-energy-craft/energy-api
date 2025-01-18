@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import net.minecraft.network.PacketByteBuf;
 
 /**
+ * Energy writer into serialized state.
+ *
  * @author sibmaks
  * @since 0.1.5
  */

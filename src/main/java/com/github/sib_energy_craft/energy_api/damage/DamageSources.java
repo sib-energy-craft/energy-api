@@ -24,8 +24,8 @@ public final class DamageSources {
      */
     public static @NotNull DamageSource energy(@NotNull World world) {
         var registryManager = world.getRegistryManager();
-        var registry = registryManager.get(RegistryKeys.DAMAGE_TYPE);
-        var registryEntry = registry.entryOf(DamageTypes.ENERGY);
+        var registry = registryManager.getOrThrow(RegistryKeys.DAMAGE_TYPE);
+        var registryEntry = registry.getOrThrow(DamageTypes.ENERGY);
         return new DamageSource(registryEntry);
     }
 

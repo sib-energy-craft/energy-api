@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "${mod_name}",
-  "version": "${mod_version}",
+  "version": "${version}",
   "name": "SibEnergyCraft",
   "description": "Fun realisation of IC from zeros. Energy API is the core of mode interactions.",
   "authors": [

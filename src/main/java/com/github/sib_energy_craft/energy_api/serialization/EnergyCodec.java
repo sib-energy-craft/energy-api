@@ -20,6 +20,9 @@ import java.nio.ByteBuffer;
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EnergyCodec implements Codec<Energy> {
+    /**
+     * Energy type codec instance
+     */
     public static final EnergyCodec CODEC = new EnergyCodec();
 
     @Override

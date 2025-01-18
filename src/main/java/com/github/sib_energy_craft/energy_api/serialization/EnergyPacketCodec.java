@@ -17,6 +17,9 @@ import java.math.BigInteger;
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EnergyPacketCodec implements PacketCodec<PacketByteBuf, Energy> {
+    /**
+     * Energy packet codec instance
+     */
     public static final EnergyPacketCodec CODEC = new EnergyPacketCodec();
 
     @Override

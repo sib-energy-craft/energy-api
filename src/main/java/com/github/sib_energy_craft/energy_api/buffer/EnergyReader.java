@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
+ * Energy reader from serialized state.
+ *
  * @author sibmaks
  * @since 0.1.5
  */
