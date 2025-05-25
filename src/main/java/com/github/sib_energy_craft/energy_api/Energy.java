@@ -243,12 +243,13 @@ public class Energy implements Comparable<Energy> {
      * @return energy instance
      */
     public static Energy readNbt(String key, NbtCompound nbt) {
-        var compound = nbt.getCompound(key);
-        if (compound == null) {
+        var compoundOptional = nbt.getCompound(key);
+        if (compoundOptional.isEmpty()) {
             return Energy.ZERO;
         }
-        var scale = compound.getInt("Scale");
-        var bytes = compound.getByteArray("Bytes");
+        var compound = compoundOptional.get();
+        var scale = compound.getInt("Scale").orElse(Constants.ENERGY_PRECISION);
+        var bytes = compound.getByteArray("Bytes").orElse(new byte[0]);
         var bigInteger = new BigInteger(bytes);
         var bigDecimal = new BigDecimal(bigInteger, scale);
         return new Energy(bigDecimal);
