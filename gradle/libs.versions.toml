@@ -1,11 +1,11 @@
 [versions]
 java = "21"
 
-minecraft = "1.21.5"
-yarn-mappings = "1.21.5+build.1"
+minecraft = "1.21.6"
+yarn-mappings = "1.21.6+build.1"
 loader = "0.16.14"
 
-fabricmc = "0.124.2+1.21.5"
+fabricmc = "0.128.0+1.21.6"
 fabricmc-loom = "1.10-SNAPSHOT"
 
 lombok = "1.18.38"
