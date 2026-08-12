@@ -6,9 +6,9 @@ import com.github.sib_energy_craft.energy_api.EnergyOffer;
 import com.github.sib_energy_craft.energy_api.constants.Constants;
 import com.github.sib_energy_craft.energy_api.consumer.EnergyConsumer;
 import com.github.sib_energy_craft.energy_api.supplier.EnergySupplier;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -38,7 +38,7 @@ public interface EnergyCable extends EnergyConsumer {
      * @param serverWorld server world
      * @param blockEntity wire block entity
      */
-    default void tick(@NotNull ServerWorld serverWorld, @NotNull BlockEntity blockEntity) {
+    default void tick(@NotNull ServerLevel serverWorld, @NotNull BlockEntity blockEntity) {
         EnergyCableTicker.tick(this, serverWorld, blockEntity);
     }
 

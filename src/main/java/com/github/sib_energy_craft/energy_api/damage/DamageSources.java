@@ -2,9 +2,9 @@ package com.github.sib_energy_craft.energy_api.damage;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.world.World;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -22,9 +22,9 @@ public final class DamageSources {
      * @param world game world
      * @return damage source
      */
-    public static @NotNull DamageSource energy(@NotNull World world) {
-        var registryManager = world.getRegistryManager();
-        var registry = registryManager.getOrThrow(RegistryKeys.DAMAGE_TYPE);
+    public static @NotNull DamageSource energy(@NotNull Level world) {
+        var registryManager = world.registryAccess();
+        var registry = registryManager.lookupOrThrow(Registries.DAMAGE_TYPE);
         var registryEntry = registry.getOrThrow(DamageTypes.ENERGY);
         return new DamageSource(registryEntry);
     }

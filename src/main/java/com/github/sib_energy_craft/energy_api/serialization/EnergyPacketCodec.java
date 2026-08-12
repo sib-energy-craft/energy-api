@@ -3,8 +3,8 @@ package com.github.sib_energy_craft.energy_api.serialization;
 import com.github.sib_energy_craft.energy_api.Energy;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -16,14 +16,14 @@ import java.math.BigInteger;
  * @since 0.1.4
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public final class EnergyPacketCodec implements PacketCodec<PacketByteBuf, Energy> {
+public final class EnergyPacketCodec implements StreamCodec<FriendlyByteBuf, Energy> {
     /**
      * Energy packet codec instance
      */
     public static final EnergyPacketCodec CODEC = new EnergyPacketCodec();
 
     @Override
-    public Energy decode(PacketByteBuf buf) {
+    public Energy decode(FriendlyByteBuf buf) {
         var scale = buf.readInt();
         var bytes = buf.readByteArray();
         var bigInteger = new BigInteger(bytes);
@@ -32,7 +32,7 @@ public final class EnergyPacketCodec implements PacketCodec<PacketByteBuf, Energ
     }
 
     @Override
-    public void encode(PacketByteBuf buf, Energy value) {
+    public void encode(FriendlyByteBuf buf, Energy value) {
         var bigDecimal = value.getAmount();
         var scale = bigDecimal.scale();
         buf.writeInt(scale);

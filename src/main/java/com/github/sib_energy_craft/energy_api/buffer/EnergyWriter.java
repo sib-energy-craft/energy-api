@@ -3,7 +3,7 @@ package com.github.sib_energy_craft.energy_api.buffer;
 import com.github.sib_energy_craft.energy_api.Energy;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 
 /**
  * Energy writer into serialized state.
@@ -15,12 +15,12 @@ import net.minecraft.network.PacketByteBuf;
 public final class EnergyWriter {
 
     /**
-     * Writes a {@link Energy} to a {@link PacketByteBuf}
+     * Writes a {@link Energy} to a {@link FriendlyByteBuf}
      *
      * @param value  the {@link Energy} to write
-     * @param buffer the {@link PacketByteBuf} to write to
+     * @param buffer the {@link FriendlyByteBuf} to write to
      */
-    public static void write(Energy value, PacketByteBuf buffer) {
+    public static void write(Energy value, FriendlyByteBuf buffer) {
         var bigDecimal = value.getAmount();
         var parts = bigDecimal.unscaledValue()
                 .toByteArray();

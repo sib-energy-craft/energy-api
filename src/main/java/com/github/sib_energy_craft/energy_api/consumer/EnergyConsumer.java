@@ -1,7 +1,7 @@
 package com.github.sib_energy_craft.energy_api.consumer;
 
 import com.github.sib_energy_craft.energy_api.EnergyOffer;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
 import org.jetbrains.annotations.NotNull;
 
 /**

@@ -3,7 +3,7 @@ package com.github.sib_energy_craft.energy_api.buffer;
 import com.github.sib_energy_craft.energy_api.Energy;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -18,12 +18,12 @@ import java.math.BigInteger;
 public final class EnergyReader {
 
     /**
-     * Reads a {@link Energy} from a {@link PacketByteBuf}.
+     * Reads a {@link Energy} from a {@link FriendlyByteBuf}.
      *
      * @param buffer the buffer to read from
      * @return the read {@link Energy}
      */
-    public static Energy read(PacketByteBuf buffer) {
+    public static Energy read(FriendlyByteBuf buffer) {
         var parts = buffer.readByteArray();
         var scale = buffer.readInt();
         var bigInt = new BigInteger(parts);

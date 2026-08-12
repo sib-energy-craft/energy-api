@@ -5,9 +5,9 @@ import com.github.sib_energy_craft.energy_api.serialization.EnergyCodec;
 import com.github.sib_energy_craft.energy_api.utils.Identifiers;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.component.ComponentType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 /**
  * Energy component types extension.
@@ -20,11 +20,11 @@ public final class ComponentTypes {
     /**
      * Mod adds new component type - energy.
      */
-    public static final ComponentType<Energy> CHARGE = Registry.register(
-            Registries.DATA_COMPONENT_TYPE,
+    public static final DataComponentType<Energy> CHARGE = Registry.register(
+            BuiltInRegistries.DATA_COMPONENT_TYPE,
             Identifiers.of("charge"),
-            ComponentType.<Energy>builder()
-                    .codec(EnergyCodec.CODEC)
+            DataComponentType.<Energy>builder()
+                    .persistent(EnergyCodec.CODEC)
                     .build()
     );
 }

@@ -2,10 +2,10 @@ package com.github.sib_energy_craft.energy_api.cable;
 
 import com.github.sib_energy_craft.energy_api.EnergyOffer;
 import com.github.sib_energy_craft.energy_api.consumer.EnergyConsumer;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -32,7 +32,7 @@ final class EnergyCableTicker {
      * @param blockEntity wire block entity
      */
     public static void tick(@NotNull EnergyCable wire,
-                            @NotNull ServerWorld serverWorld,
+                            @NotNull ServerLevel serverWorld,
                             @NotNull BlockEntity blockEntity) {
         var energyOffers = wire.retrieveUpcomingOffers();
 
@@ -51,13 +51,13 @@ final class EnergyCableTicker {
 
     private static boolean assertOffer(@NotNull EnergyCable wire,
                                        @NotNull BlockEntity blockEntity,
-                                       @NotNull ServerWorld serverWorld,
+                                       @NotNull ServerLevel serverWorld,
                                        @NotNull EnergyOffer energyOffer) {
         var wireEnergyLevel = wire.getEnergyLevel();
         if (wireEnergyLevel.to.compareTo(energyOffer.getEnergyAmount()) < 0) {
             if (energyOffer.acceptOffer()) {
-                var pos = blockEntity.getPos();
-                serverWorld.breakBlock(pos, false);
+                var pos = blockEntity.getBlockPos();
+                serverWorld.destroyBlock(pos, false);
                 return true;
             }
         }
@@ -66,7 +66,7 @@ final class EnergyCableTicker {
 
     private static void forwardOffer(@NotNull EnergyCable wire,
                                      @NotNull BlockEntity blockEntity,
-                                     @NotNull World world,
+                                     @NotNull Level world,
                                      @NotNull EnergyOffer energyOffer) {
         var resistance = wire.getResistance();
         var forked = energyOffer.fork(resistance);
@@ -74,9 +74,9 @@ final class EnergyCableTicker {
             return;
         }
 
-        var pos = blockEntity.getPos();
+        var pos = blockEntity.getBlockPos();
         for (var direction : SUPPLYING_DIRECTIONS) {
-            var neighborPos = pos.offset(direction);
+            var neighborPos = pos.relative(direction);
             var neighbor = world.getBlockEntity(neighborPos);
             if (!(neighbor instanceof EnergyConsumer consumer)) {
                 continue;

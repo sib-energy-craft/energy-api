@@ -1,12 +1,12 @@
 package com.github.sib_energy_craft.energy_api.tags;
 
 import com.github.sib_energy_craft.energy_api.utils.Identifiers;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -20,8 +20,8 @@ public class CoreTags {
     private static final TagKey<Block> ENERGY_CONDUCTOR;
 
     static {
-        CHARGEABLE =  TagKey.of(RegistryKeys.ITEM, Identifiers.of("chargeable"));
-        ENERGY_CONDUCTOR =  TagKey.of(RegistryKeys.BLOCK, Identifiers.of("energy_conductor"));
+        CHARGEABLE =  TagKey.create(Registries.ITEM, Identifiers.of("chargeable"));
+        ENERGY_CONDUCTOR =  TagKey.create(Registries.BLOCK, Identifiers.of("energy_conductor"));
     }
 
     /**
@@ -32,7 +32,7 @@ public class CoreTags {
      * @return true - item is chargeable, false - otherwise
      */
     public static boolean isChargeable(@NotNull ItemStack itemStack) {
-        return itemStack.streamTags().anyMatch(it -> it.equals(CoreTags.CHARGEABLE));
+        return itemStack.typeHolder().is(CoreTags.CHARGEABLE);
     }
 
     /**
@@ -43,6 +43,6 @@ public class CoreTags {
      * @return true - block is energy conductor, false - otherwise
      */
     public static boolean isEnergyConductor(@NotNull BlockState blockState) {
-        return blockState.streamTags().anyMatch(it -> it.equals(CoreTags.ENERGY_CONDUCTOR));
+        return blockState.typeHolder().is(CoreTags.ENERGY_CONDUCTOR);
     }
 }

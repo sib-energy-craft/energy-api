@@ -5,7 +5,7 @@ import com.github.sib_energy_craft.energy_api.exception.NegativeEnergyException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -43,7 +43,7 @@ public class Energy implements Comparable<Energy> {
     private final BigDecimal amount;
 
     /**
-     * Translate passed {@link int} amount into energy with scale to mod accuracy
+     * Translate passed {@code int} amount into energy with scale to mod accuracy
      *
      * @param amount energy amount
      */
@@ -222,10 +222,10 @@ public class Energy implements Comparable<Energy> {
      * @param key nbt energy key
      * @param nbt nbt to write
      */
-    public void writeNbt(String key, NbtCompound nbt) {
+    public void writeNbt(String key, CompoundTag nbt) {
         var scale = amount.scale();
 
-        var nbtCompound = new NbtCompound();
+        var nbtCompound = new CompoundTag();
         nbtCompound.putInt("Scale", scale);
 
         var bytes = amount.unscaledValue()
@@ -236,13 +236,13 @@ public class Energy implements Comparable<Energy> {
     }
 
     /**
-     * Read Energy from {@link NbtCompound} by passed key
+     * Read Energy from {@link CompoundTag} by passed key
      *
      * @param key energy key
      * @param nbt source nbt
      * @return energy instance
      */
-    public static Energy readNbt(String key, NbtCompound nbt) {
+    public static Energy readNbt(String key, CompoundTag nbt) {
         var compoundOptional = nbt.getCompound(key);
         if (compoundOptional.isEmpty()) {
             return Energy.ZERO;

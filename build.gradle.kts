@@ -24,6 +24,7 @@ dependencies {
     testImplementation(libs.bundles.testing)
 
     testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 val minecraftVersion = libs.versions.minecraft.get()

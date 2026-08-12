@@ -1,9 +1,9 @@
 package com.github.sib_energy_craft.energy_api.screen;
 
 import com.github.sib_energy_craft.energy_api.items.ChargeableItem;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -25,7 +25,7 @@ public class ChargeSlot extends Slot {
      * @param y screen y position
      * @param charging true - slot for item charging, false - discharging
      */
-    public ChargeSlot(@NotNull Inventory inventory,
+    public ChargeSlot(@NotNull Container inventory,
                       int index,
                       int x,
                       int y,
@@ -35,7 +35,7 @@ public class ChargeSlot extends Slot {
     }
 
     @Override
-    public boolean canInsert(@NotNull ItemStack stack) {
+    public boolean mayPlace(@NotNull ItemStack stack) {
         final var item = stack.getItem();
         if(!(stack.getCount() == 1 && item instanceof ChargeableItem chargeableItem)) {
             return false;
@@ -48,7 +48,7 @@ public class ChargeSlot extends Slot {
     }
 
     @Override
-    public int getMaxItemCount(@NotNull ItemStack stack) {
+    public int getMaxStackSize(@NotNull ItemStack stack) {
         return 1;
     }
 

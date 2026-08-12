@@ -2,7 +2,7 @@ package com.github.sib_energy_craft.energy_api.buffer;
 
 import com.github.sib_energy_craft.energy_api.Energy;
 import com.github.sib_energy_craft.energy_api.constants.Constants;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
@@ -24,7 +24,7 @@ class EnergyReaderAndWriterTest {
             "9223372036854775807.9223372036854775807"
     })
     void testConvertEnergy(String value) {
-        var buffer = mock(PacketByteBuf.class);
+        var buffer = mock(FriendlyByteBuf.class);
         var energy = new Energy(new BigDecimal(value));
         EnergyWriter.write(energy, buffer);
 

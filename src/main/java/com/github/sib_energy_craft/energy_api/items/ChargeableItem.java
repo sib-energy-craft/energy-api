@@ -2,9 +2,9 @@ package com.github.sib_energy_craft.energy_api.items;
 
 import com.github.sib_energy_craft.energy_api.Energy;
 import com.github.sib_energy_craft.energy_api.component.ComponentTypes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -145,7 +145,7 @@ public interface ChargeableItem {
      * @param itemStack crafted item stack
      */
     default void onCraft(@NotNull ItemStack itemStack) {
-        if (!itemStack.contains(ComponentTypes.CHARGE)) {
+        if (!itemStack.has(ComponentTypes.CHARGE)) {
             itemStack.set(ComponentTypes.CHARGE, Energy.ZERO);
         }
     }
@@ -157,14 +157,14 @@ public interface ChargeableItem {
      * @param tooltip   result tooltips
      */
     default void appendTooltip(@NotNull ItemStack itemStack,
-                               @NotNull List<Text> tooltip) {
+                               @NotNull List<Component> tooltip) {
         var itemCharge = getCharge(itemStack)
                 .toPlainString();
         var maxCharge = getMaxCharge()
                 .toPlainString();
-        tooltip.add(Text.translatable("attribute.name.sib_energy_craft.charge", itemCharge)
+        tooltip.add(Component.translatable("attribute.name.sib_energy_craft.charge", itemCharge)
                 .setStyle(Style.EMPTY.withColor(Color.GRAY.getRGB())));
-        tooltip.add(Text.translatable("attribute.name.sib_energy_craft.max_charge", maxCharge)
+        tooltip.add(Component.translatable("attribute.name.sib_energy_craft.max_charge", maxCharge)
                 .setStyle(Style.EMPTY.withColor(Color.GRAY.getRGB())));
     }
 }

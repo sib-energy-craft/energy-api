@@ -3,8 +3,8 @@ package com.github.sib_energy_craft.energy_api.supplier;
 import com.github.sib_energy_craft.energy_api.consumer.EnergyConsumer;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -24,12 +24,12 @@ final class EnergySupplierTicker {
      * @param blockEntity energy supplier block
      */
     public static void tick(@NotNull EnergySupplier supplier,
-                            @NotNull ServerWorld serverWorld,
+                            @NotNull ServerLevel serverWorld,
                             @NotNull BlockEntity blockEntity) {
-        var pos = blockEntity.getPos();
+        var pos = blockEntity.getBlockPos();
         var directions = supplier.getSupplyingDirections();
         for (var direction : directions) {
-            var neighborPos = pos.offset(direction);
+            var neighborPos = pos.relative(direction);
             var neighbor = serverWorld.getBlockEntity(neighborPos);
             if (!(neighbor instanceof EnergyConsumer consumer)) {
                 continue;

@@ -2,7 +2,7 @@ package com.github.sib_energy_craft.energy_api.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -26,7 +26,7 @@ public final class Identifiers {
      */
     @NotNull
     public static Identifier of(@NotNull String path) {
-        return Identifier.of(MOD_NAMESPACE, path);
+        return Identifier.fromNamespaceAndPath(MOD_NAMESPACE, path);
     }
 
     /**

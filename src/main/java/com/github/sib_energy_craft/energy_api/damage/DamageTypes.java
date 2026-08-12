@@ -3,9 +3,9 @@ package com.github.sib_energy_craft.energy_api.damage;
 import com.github.sib_energy_craft.energy_api.utils.Identifiers;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageType;
 
 /**
  * Damage types can be caused be mod
@@ -15,9 +15,9 @@ public final class DamageTypes {
     /**
      * Type of damage that can be caused by bare cables
      */
-    public static final RegistryKey<DamageType> ENERGY;
+    public static final ResourceKey<DamageType> ENERGY;
 
     static {
-        ENERGY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifiers.of("energy"));
+        ENERGY = ResourceKey.create(Registries.DAMAGE_TYPE, Identifiers.of("energy"));
     }
 }
